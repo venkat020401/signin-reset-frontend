@@ -34,7 +34,7 @@ function Login() {
         onSubmit: async (values) => {
             try {
                 setLoading(true);
-                const admin_login = await axios.post("http://localhost:8000/login", values);
+                const admin_login = await axios.post("https://auth-backend-qgdn.onrender.com/login", values);
                 navigate("/dashboard");
                 setLoading(false);
 

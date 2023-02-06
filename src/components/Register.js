@@ -45,7 +45,7 @@ function Register() {
     onSubmit: async (values) => {
       try {
         setLoading(true);
-        await axios.post("http://localhost:8000/register", values);
+        await axios.post("https://auth-backend-qgdn.onrender.com/register", values);
         alert("registeration success💐");
         navigate("/");
         setLoading(false);

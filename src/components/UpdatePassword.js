@@ -33,7 +33,7 @@ function UpdatePassword() {
             try {
                 console.log(params.id)
                 setLoading(true);
-                const data = await axios.put(`http://localhost:8000/password-update/${params.id}`, values);
+                const data = await axios.put(`https://auth-backend-qgdn.onrender.com/password-update/${params.id}`, values);
                 console.log(data)
                 formik.values.password = '';
                 formik.values.confirm_password = '';

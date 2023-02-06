@@ -32,7 +32,7 @@ function PasswordReset() {
         onSubmit: async (values) => {
             try {
                 setLoading(true);
-                const data = await axios.post("http://localhost:8000/sendpasswordlink", values);
+                const data = await axios.post("https://auth-backend-qgdn.onrender.com/sendpasswordlink", values);
                 setEmail("Reset link send succsfully to your email");
                 setMessage(true);
                 formik.values.email = '';

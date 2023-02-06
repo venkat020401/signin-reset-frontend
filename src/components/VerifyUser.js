@@ -12,7 +12,7 @@ function VerifyUser() {
   const verifyuser = async () => {
 
     try {
-      const user = await axios.post(`http://localhost:8000/verify-user/${params.id}/${params.randomnum}`);
+      const user = await axios.post(`https://auth-backend-qgdn.onrender.com/verify-user/${params.id}/${params.randomnum}`);
       navigate(`/update-password/${params.id}`);
 
     } catch (error) {
