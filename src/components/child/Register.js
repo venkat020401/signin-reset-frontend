@@ -51,7 +51,7 @@ function Register() {
     onSubmit: async (values) => {
       try {
         setLoading(true);
-        await axios.post("http://localhost:8000/register", values);
+        await axios.post("https://signin-reset-backend.onrender.com/register", values);
         alert("Registration success💐 Please Login!");
         navigate("/");
         setLoading(false);

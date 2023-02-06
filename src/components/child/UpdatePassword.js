@@ -38,7 +38,7 @@ function UpdatePassword() {
         console.log(params.id);
         setLoading(true);
         const data = await axios.put(
-          `http://localhost:8000/password-update/${params.id}`,
+          `https://signin-reset-backend.onrender.com/password-update/${params.id}`,
           values
         );
         console.log(data);
