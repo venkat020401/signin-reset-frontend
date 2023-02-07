@@ -34,6 +34,7 @@ function Login() {
     },
     onSubmit: async (values) => {
       try {
+        setErrorMsg(false);
         setLoading(true);
         await axios.post("https://signin-reset-backend.onrender.com/login", values);
         navigate("/dashboard");
