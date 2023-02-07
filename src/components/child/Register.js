@@ -8,10 +8,7 @@ function Register() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
   const [isShown, setIsSHown] = useState(false);
-
-  const togglePassword = () => {
-    setIsSHown((isShown) => !isShown);
-  };
+  const [isError, setError] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -32,6 +29,7 @@ function Register() {
       }
       if (!values.email) {
         error.email = "*Please enter the email";
+        setError(false);
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
       ) {
@@ -39,6 +37,8 @@ function Register() {
       }
       if (!values.password) {
         error.password = "*Please enter password";
+      } else if (values.password.length < 4) {
+        error.password = "Must be at least 4 characters";
       }
       if (!values.confirm_password) {
         error.confirm_password = "*Enter confirm password";
@@ -50,10 +50,17 @@ function Register() {
 
     onSubmit: async (values) => {
       try {
+        setError(false);
         setLoading(true);
-        await axios.post("https://signin-reset-backend.onrender.com/register", values);
-        alert("Registration success💐 Please Login!");
-        navigate("/");
+        const user = await axios.post("https://signin-reset-backend.onrender.com/register", values);
+        if (user.data.message == "register success") {
+          setLoading(false);
+          setError(false);
+          alert("Registration success💐 Please Login!");
+          navigate("/");
+        } else {
+          setError(true);
+        }
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -113,9 +120,15 @@ function Register() {
                       id="exampleInputEmail"
                       placeholder="Email Address"
                     />
-                    <small style={{ color: "crimson" }} className="ml-3">
-                      {formik.errors.email}
-                    </small>
+                    {isError ? (
+                      <small style={{ color: "crimson" }} className="ml-3">
+                        An account with the given email already exists
+                      </small>
+                    ) : (
+                      <small style={{ color: "crimson" }} className="ml-3">
+                        {formik.errors.email}
+                      </small>
+                    )}
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -135,7 +148,7 @@ function Register() {
                         <input
                           type="checkbox"
                           checked={isShown}
-                          onChange={togglePassword}
+                          onChange={() => setIsSHown(!isShown)}
                           class="custom-control-input"
                           id="customCheck"
                         />

@@ -10,10 +10,6 @@ function Login() {
   const [ErrorMsg, setErrorMsg] = useState(false);
   const [isShown, setIsSHown] = useState(false);
 
-  const togglePassword = () => {
-    setIsSHown((isShown) => !isShown);
-  };
-
   const admin_formik = useFormik({
     initialValues: {
       email: "",
@@ -110,7 +106,7 @@ function Login() {
                             <input
                               type="checkbox"
                               checked={isShown}
-                              onChange={togglePassword}
+                              onChange={()=>setIsSHown(!isShown)}
                               class="custom-control-input"
                               id="customCheck"
                             />

@@ -9,10 +9,6 @@ function UpdatePassword() {
   const [isLoading, setLoading] = useState(false);
   const [isShown, setIsSHown] = useState(false);
 
-  const togglePassword = () => {
-    setIsSHown((isShown) => !isShown);
-  };
-
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -99,7 +95,7 @@ function UpdatePassword() {
                           <input
                             type="checkbox"
                             checked={isShown}
-                            onChange={togglePassword}
+                            onChange={()=>setIsSHown(!isShown)}
                             class="custom-control-input"
                             id="customCheck"
                           />
