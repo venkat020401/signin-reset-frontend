@@ -70,7 +70,7 @@ function Register() {
         error.password = "*Invalid Password";
         setPassword4("crimson");
       }
-      if(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.*[0-9])(?=.{8,})/.test(values.password)){
+      if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.*[0-9])(?=.{8,})/.test(values.password)) {
         setNode(false);
       }
       if (!values.confirm_password) {
@@ -85,7 +85,10 @@ function Register() {
       try {
         setError(false);
         setLoading(true);
-        const user = await axios.post("https://signin-reset-backend.onrender.com/register", values);
+        const user = await axios.post(
+          "https://signin-reset-backend.onrender.com/register",
+          values
+        );
         if (user.data.message == "register success") {
           setLoading(false);
           setError(false);

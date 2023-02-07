@@ -66,7 +66,6 @@ function UpdatePassword() {
     },
     onSubmit: async (values) => {
       try {
-        console.log(params.id);
         setLoading(true);
         const data = await axios.put(
           `https://signin-reset-backend.onrender.com/password-update/${params.id}`,
