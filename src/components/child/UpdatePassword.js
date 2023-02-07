@@ -20,6 +20,9 @@ function UpdatePassword() {
       if (!values.password) {
         error.password = "*Enter the new password";
       }
+      else if (values.password.length < 4) {
+        error.password = "Must be at least 4 characters";
+      }
       if (!values.confirm_password) {
         error.confirm_password = "*Enter the confirm password";
       }
