@@ -9,6 +9,11 @@ function Register() {
   const [isLoading, setLoading] = useState(false);
   const [isShown, setIsSHown] = useState(false);
   const [isError, setError] = useState(false);
+  const [isNote, setNode] = useState(false);
+  const [Password1, setPassword1] = useState("crimson");
+  const [Password2, setPassword2] = useState("crimson");
+  const [Password3, setPassword3] = useState("crimson");
+  const [Password4, setPassword4] = useState("crimson");
 
   const formik = useFormik({
     initialValues: {
@@ -29,19 +34,44 @@ function Register() {
       }
       if (!values.email) {
         error.email = "*Please enter the email";
-        setError(false);
       } else if (
         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
       ) {
+        setError(false);
         error.email = "Invalid email address";
       }
       if (!values.password) {
         error.password = "*Please enter password";
-      }else if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(values.password)){
-        error.password = "Must be at least 8 characters"
       }
-       else if (values.password.length < 4) {
-        error.password = "Must be at least 4 characters";
+      if (values.password) {
+        setNode(true);
+      }
+      if (/^(?=.*[a-z])/.test(values.password)) {
+        setPassword1("green");
+      } else if (!/^(?=.*[a-z])/.test(values.password)) {
+        error.password = "*Invalid Password";
+        setPassword1("crimson");
+      }
+      if (/^(?=.*[A-Z])/.test(values.password)) {
+        setPassword2("green");
+      } else if (!/^(?=.*[A-Z])/.test(values.password)) {
+        error.password = "*Invalid Password";
+        setPassword2("crimson");
+      }
+      if (/^(?=.*[!@#\$%\^&\*])(?=.*[0-9])/.test(values.password)) {
+        setPassword3("green");
+      } else if (!/^(?=.*[!@#\$%\^&\*])(?=.*[0-9])/.test(values.password)) {
+        error.password = "*Invalid Password";
+        setPassword3("crimson");
+      }
+      if (/^(?=.{8,})/.test(values.password)) {
+        setPassword4("green");
+      } else if (!/^(?=.{8,})/.test(values.password)) {
+        error.password = "*Invalid Password";
+        setPassword4("crimson");
+      }
+      if(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.*[0-9])(?=.{8,})/.test(values.password)){
+        setNode(false);
       }
       if (!values.confirm_password) {
         error.confirm_password = "*Enter confirm password";
@@ -84,7 +114,7 @@ function Register() {
                 </div>
                 <form class="user" onSubmit={formik.handleSubmit}>
                   <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="col-sm-6 mb-sm-0">
                       <input
                         name={"First_name"}
                         value={formik.values.First_name}
@@ -134,7 +164,7 @@ function Register() {
                     )}
                   </div>
                   <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="col-sm-6 mb-sm-0">
                       <input
                         name={"password"}
                         value={formik.values.password}
@@ -147,18 +177,6 @@ function Register() {
                       <small style={{ color: "crimson" }} className="ml-3">
                         {formik.errors.password}
                       </small>
-                      <div class=" custom-control custom-checkbox small">
-                        <input
-                          type="checkbox"
-                          checked={isShown}
-                          onChange={() => setIsSHown(!isShown)}
-                          class="custom-control-input"
-                          id="customCheck"
-                        />
-                        <label class="custom-control-label" for="customCheck">
-                          Show Password
-                        </label>
-                      </div>
                     </div>
                     <div class="col-sm-6">
                       <input
@@ -174,8 +192,42 @@ function Register() {
                         {formik.errors.confirm_password}
                       </small>
                     </div>
+                    <div class=" custom-control custom-checkbox small ml-3">
+                      <input
+                        type="checkbox"
+                        checked={isShown}
+                        onChange={() => setIsSHown(!isShown)}
+                        class="custom-control-input"
+                        id="customCheck"
+                      />
+                      <label class="custom-control-label" for="customCheck">
+                        Show Password
+                      </label>
+                    </div>
                   </div>
-
+                  {isNote ? (
+                    <div class="form-group mb-3">
+                      <p className="m-0 text-dark">The password must have :</p>
+                      <ul style={{ color: "crimson" }}>
+                        <li style={{ color: `${Password4}` }}>
+                          <small>At least 8 characters in length</small>
+                        </li>
+                        <li style={{ color: `${Password1}` }}>
+                          <small>Must be one lowercase letter</small>
+                        </li>
+                        <li style={{ color: `${Password2}` }}>
+                          <small>Must be one uppercase letter</small>
+                        </li>
+                        <li style={{ color: `${Password3}` }}>
+                          <small>
+                            Must be one number and Special character
+                          </small>
+                        </li>
+                      </ul>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <input
                     type={"submit"}
                     value={`${isLoading ? "Loading..." : "Register"}`}
