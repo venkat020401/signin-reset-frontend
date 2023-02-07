@@ -37,7 +37,10 @@ function Register() {
       }
       if (!values.password) {
         error.password = "*Please enter password";
-      } else if (values.password.length < 4) {
+      }else if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(values.password)){
+        error.password = "Must be at least 8 characters"
+      }
+       else if (values.password.length < 4) {
         error.password = "Must be at least 4 characters";
       }
       if (!values.confirm_password) {
